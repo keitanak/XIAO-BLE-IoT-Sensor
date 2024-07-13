@@ -1,0 +1,33 @@
+﻿
+事前にBLEライブラリのインストールが必要です。
+```
+sudo pip3 install bluepy
+```
+
+また、以下の箇所にご自分のThingsSpeak チャネルのWrite APIキーを入力します。
+```
+# Put your thingsspeak API key.
+thingspeak_api_key = 'XXXXXXXXXXXXX'
+```
+
+動作テストは以下のように実行します。
+/usr/bin/python3 /home/pi/tp/BleSendtoTP.py
+
+
+https://www.pc-koubou.jp/magazine/52061
+
+========
+[Unit]
+Description=BLE to ThingsSpeak
+
+[Service]
+ExecStart=/usr/bin/python3 /home/pi/tp/BleSendtoTP.py
+
+[Install]
+WantedBy=multi-user.target
+
+
+========
+
+sudo systemctl start bletp.service
+
