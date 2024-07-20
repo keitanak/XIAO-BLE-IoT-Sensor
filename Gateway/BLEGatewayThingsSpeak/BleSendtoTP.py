@@ -10,6 +10,7 @@ import struct
 from datetime import datetime,timedelta
 import argparse
 import requests
+from requests.exceptions import RequestException, ConnectionError, HTTPError, Timeout
 import time
 import numpy as np
 
@@ -50,7 +51,16 @@ def post_thingspeak(value1, value2, value3, value4, value5, value6, value7, valu
         'field7': value7, #
         'field8': value8 #
     }
-    r = requests.get(url, params=params)
+    try:
+        r = requests.get(url, params=params)
+    except ConnectionError as ce:
+        print("Connection Error:", ce)
+    except HTTPError as he:
+        print("HTTP Error:", he)
+    except Timeout as te:
+        print("Timeout Error:", te)
+    except RequestException as re:
+        print("Error:", re)
     return r.status_code
 
 class ScanDelegate(DefaultDelegate):
